@@ -1,0 +1,640 @@
+{
+  "rootFolder": "/Users/christinemarquez/Desktop/dev-projects/personal-projects/glassnow",
+  "analyzedAt": "2026-07-10T18:30:37.645Z",
+  "rootStructure": [
+    {
+      "name": ".gitignore",
+      "type": "file",
+      "size": 121,
+      "lines": 11
+    },
+    {
+      "name": "README.md",
+      "type": "file",
+      "size": 273,
+      "lines": 13
+    },
+    {
+      "name": "app",
+      "type": "dir"
+    },
+    {
+      "name": "components",
+      "type": "dir"
+    },
+    {
+      "name": "eslint.config.mjs",
+      "type": "file",
+      "size": 439,
+      "lines": 20
+    },
+    {
+      "name": "glassnow-logo-nobg.png",
+      "type": "file",
+      "size": 603909,
+      "lines": 3016
+    },
+    {
+      "name": "glassnow-logo.png",
+      "type": "file",
+      "size": 1096504,
+      "lines": 4445
+    },
+    {
+      "name": "glassnow-logo1.png",
+      "type": "file",
+      "size": 1096504,
+      "lines": 4445
+    },
+    {
+      "name": "jsconfig.json",
+      "type": "file",
+      "size": 93,
+      "lines": 9
+    },
+    {
+      "name": "mr-glasscot.png",
+      "type": "file",
+      "size": 1308085,
+      "lines": 5261
+    },
+    {
+      "name": "mrglasscot.png",
+      "type": "file",
+      "size": 1308085,
+      "lines": 5261
+    },
+    {
+      "name": "next.config.mjs",
+      "type": "file",
+      "size": 178,
+      "lines": 9
+    },
+    {
+      "name": "njglass no bg.png",
+      "type": "file",
+      "size": 603909,
+      "lines": 3016
+    },
+    {
+      "name": "node_modules",
+      "type": "dir"
+    },
+    {
+      "name": "overview.json",
+      "type": "file",
+      "size": 1144,
+      "lines": 51
+    },
+    {
+      "name": "overview_architecture.puml",
+      "type": "file",
+      "size": 246,
+      "lines": 7
+    },
+    {
+      "name": "package-lock.json",
+      "type": "file",
+      "size": 214718,
+      "lines": 6185
+    },
+    {
+      "name": "package.json",
+      "type": "file",
+      "size": 538,
+      "lines": 26
+    },
+    {
+      "name": "postcss.config.mjs",
+      "type": "file",
+      "size": 94,
+      "lines": 8
+    },
+    {
+      "name": "potential assets",
+      "type": "dir"
+    },
+    {
+      "name": "public",
+      "type": "dir"
+    },
+    {
+      "name": "resources",
+      "type": "dir"
+    }
+  ],
+  "rootFileSnippets": {
+    "README.md": [
+      "# GlassNow",
+      "",
+      "Customer-facing website for GlassNow, a mobile auto-glass repair and replacement brand serving New Jersey and the greater NYC metro area.",
+      "",
+      "## Run locally",
+      "",
+      "```bash",
+      "npm install",
+      "npm run dev",
+      "```"
+    ],
+    "eslint.config.mjs": [
+      "import { FlatCompat } from \"@eslint/eslintrc\";",
+      "import { dirname } from \"node:path\";",
+      "import { fileURLToPath } from \"node:url\";",
+      "",
+      "const __filename = fileURLToPath(import.meta.url);",
+      "const __dirname = dirname(__filename);",
+      "",
+      "const compat = new FlatCompat({",
+      "baseDirectory: __dirname,",
+      "});"
+    ],
+    "glassnow-logo-nobg.png": [
+      "�PNG",
+      "\u001a",
+      "\u0000\u0000\u0000\rIHDR\u0000\u0000\u0006\u0000\u0000\u0000\u0004\u0000\b\u0006\u0000\u0000\u0000'q�B\u0000\u0000\u0000\u0001sRGB\u0000��\u001c�\u0000\u0000\u0000PeXIfMM\u0000*\u0000\u0000\u0000\b\u0000\u0002\u0001\u0012\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0001\u0000\u0000�i\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0000&\u0000\u0000\u0000\u0000\u0000\u0003�\u0001\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0001\u0000\u0000�\u0002\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0006\u0000�\u0003\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0004\u0000\u0000\u0000\u0000\u0000�ԯ�\u0000\u0000\u0001YiTXtXML:com.adobe.xmp\u0000\u0000\u0000\u0000\u0000<x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"XMP Core 6.0.0\">",
+      "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">",
+      "<rdf:Description rdf:about=\"\"",
+      "xmlns:tiff=\"http://ns.adobe.com/tiff/1.0/\">",
+      "<tiff:Orientation>1</tiff:Orientation>",
+      "</rdf:Description>",
+      "</rdf:RDF>",
+      "</x:xmpmeta>"
+    ],
+    "glassnow-logo.png": [
+      "�PNG",
+      "\u001a",
+      "\u0000\u0000\u0000\rIHDR\u0000\u0000\u0006\u0000\u0000\u0000\u0004\u0000\b\u0002\u0000\u0000\u0000�\u0013\u0005\u0015\u0000\u0000\u0000\u0001sRGB\u0000��\u001c�\u0000\u0000\u0000PeXIfMM\u0000*\u0000\u0000\u0000\b\u0000\u0002\u0001\u0012\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0001\u0000\u0000�i\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0000&\u0000\u0000\u0000\u0000\u0000\u0003�\u0001\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0001\u0000\u0000�\u0002\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0006\u0000�\u0003\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0004\u0000\u0000\u0000\u0000\u0000�ԯ�\u0000\u0000\u0001YiTXtXML:com.adobe.xmp\u0000\u0000\u0000\u0000\u0000<x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"XMP Core 6.0.0\">",
+      "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">",
+      "<rdf:Description rdf:about=\"\"",
+      "xmlns:tiff=\"http://ns.adobe.com/tiff/1.0/\">",
+      "<tiff:Orientation>1</tiff:Orientation>",
+      "</rdf:Description>",
+      "</rdf:RDF>",
+      "</x:xmpmeta>"
+    ],
+    "glassnow-logo1.png": [
+      "�PNG",
+      "\u001a",
+      "\u0000\u0000\u0000\rIHDR\u0000\u0000\u0006\u0000\u0000\u0000\u0004\u0000\b\u0002\u0000\u0000\u0000�\u0013\u0005\u0015\u0000\u0000\u0000\u0001sRGB\u0000��\u001c�\u0000\u0000\u0000PeXIfMM\u0000*\u0000\u0000\u0000\b\u0000\u0002\u0001\u0012\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0001\u0000\u0000�i\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0000&\u0000\u0000\u0000\u0000\u0000\u0003�\u0001\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0001\u0000\u0000�\u0002\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0006\u0000�\u0003\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0004\u0000\u0000\u0000\u0000\u0000�ԯ�\u0000\u0000\u0001YiTXtXML:com.adobe.xmp\u0000\u0000\u0000\u0000\u0000<x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"XMP Core 6.0.0\">",
+      "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">",
+      "<rdf:Description rdf:about=\"\"",
+      "xmlns:tiff=\"http://ns.adobe.com/tiff/1.0/\">",
+      "<tiff:Orientation>1</tiff:Orientation>",
+      "</rdf:Description>",
+      "</rdf:RDF>",
+      "</x:xmpmeta>"
+    ],
+    "jsconfig.json": [
+      "{",
+      "\"compilerOptions\": {",
+      "\"baseUrl\": \".\",",
+      "\"paths\": {",
+      "\"@/*\": [\"./*\"]",
+      "}",
+      "}",
+      "}",
+      ""
+    ],
+    "mr-glasscot.png": [
+      "�PNG",
+      "\u001a",
+      "\u0000\u0000\u0000\rIHDR\u0000\u0000\u0004\u0000\u0000\u0000\u0006\u0000\b\u0006\u0000\u0000\u0000�:�\u0000\u0000\u0000\u0001sRGB\u0000��\u001c�\u0000\u0000\u0000PeXIfMM\u0000*\u0000\u0000\u0000\b\u0000\u0002\u0001\u0012\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0001\u0000\u0000�i\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0000&\u0000\u0000\u0000\u0000\u0000\u0003�\u0001\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0001\u0000\u0000�\u0002\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0004\u0000�\u0003\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0006\u0000\u0000\u0000\u0000\u0000��e\b\u0000\u0000\u0001YiTXtXML:com.adobe.xmp\u0000\u0000\u0000\u0000\u0000<x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"XMP Core 6.0.0\">",
+      "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">",
+      "<rdf:Description rdf:about=\"\"",
+      "xmlns:tiff=\"http://ns.adobe.com/tiff/1.0/\">",
+      "<tiff:Orientation>1</tiff:Orientation>",
+      "</rdf:Description>",
+      "</rdf:RDF>",
+      "</x:xmpmeta>"
+    ],
+    "mrglasscot.png": [
+      "�PNG",
+      "\u001a",
+      "\u0000\u0000\u0000\rIHDR\u0000\u0000\u0004\u0000\u0000\u0000\u0006\u0000\b\u0006\u0000\u0000\u0000�:�\u0000\u0000\u0000\u0001sRGB\u0000��\u001c�\u0000\u0000\u0000PeXIfMM\u0000*\u0000\u0000\u0000\b\u0000\u0002\u0001\u0012\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0001\u0000\u0000�i\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0000&\u0000\u0000\u0000\u0000\u0000\u0003�\u0001\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0001\u0000\u0000�\u0002\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0004\u0000�\u0003\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0006\u0000\u0000\u0000\u0000\u0000��e\b\u0000\u0000\u0001YiTXtXML:com.adobe.xmp\u0000\u0000\u0000\u0000\u0000<x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"XMP Core 6.0.0\">",
+      "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">",
+      "<rdf:Description rdf:about=\"\"",
+      "xmlns:tiff=\"http://ns.adobe.com/tiff/1.0/\">",
+      "<tiff:Orientation>1</tiff:Orientation>",
+      "</rdf:Description>",
+      "</rdf:RDF>",
+      "</x:xmpmeta>"
+    ],
+    "next.config.mjs": [
+      "import path from \"node:path\";",
+      "",
+      "/** @type {import('next').NextConfig} */",
+      "const nextConfig = {",
+      "outputFileTracingRoot: path.resolve(process.cwd()),",
+      "};",
+      "",
+      "export default nextConfig;",
+      ""
+    ],
+    "njglass no bg.png": [
+      "�PNG",
+      "\u001a",
+      "\u0000\u0000\u0000\rIHDR\u0000\u0000\u0006\u0000\u0000\u0000\u0004\u0000\b\u0006\u0000\u0000\u0000'q�B\u0000\u0000\u0000\u0001sRGB\u0000��\u001c�\u0000\u0000\u0000PeXIfMM\u0000*\u0000\u0000\u0000\b\u0000\u0002\u0001\u0012\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0001\u0000\u0000�i\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0000&\u0000\u0000\u0000\u0000\u0000\u0003�\u0001\u0000\u0003\u0000\u0000\u0000\u0001\u0000\u0001\u0000\u0000�\u0002\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0006\u0000�\u0003\u0000\u0004\u0000\u0000\u0000\u0001\u0000\u0000\u0004\u0000\u0000\u0000\u0000\u0000�ԯ�\u0000\u0000\u0001YiTXtXML:com.adobe.xmp\u0000\u0000\u0000\u0000\u0000<x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"XMP Core 6.0.0\">",
+      "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">",
+      "<rdf:Description rdf:about=\"\"",
+      "xmlns:tiff=\"http://ns.adobe.com/tiff/1.0/\">",
+      "<tiff:Orientation>1</tiff:Orientation>",
+      "</rdf:Description>",
+      "</rdf:RDF>",
+      "</x:xmpmeta>"
+    ],
+    "overview.json": [
+      "{",
+      "\"rootFolder\": \"/Users/christinemarquez/Desktop/dev-projects/client-work/mr-glass\",",
+      "\"analyzedAt\": \"2026-07-06T20:59:41.716Z\",",
+      "\"rootStructure\": [],",
+      "\"rootFileSnippets\": {},",
+      "\"importantFolders\": [],",
+      "\"readmeParagraphs\": {},",
+      "\"totals\": {",
+      "\"numFiles\": 0,",
+      "\"numDirs\": 0,"
+    ],
+    "overview_architecture.puml": [
+      "@startuml",
+      "' Generated by SASVA Maria on 2026-07-06T20:59:41.722Z",
+      "' ERROR: Diagram generation failed",
+      "",
+      "note \"Architecture Diagram Generation Failed\\n\\nError: No chat model configured\\n\\nPlease check the logs for more details.\" as ErrorNote",
+      "",
+      "@enduml"
+    ],
+    "package-lock.json": [
+      "{",
+      "\"name\": \"glassnow\",",
+      "\"version\": \"0.1.0\",",
+      "\"lockfileVersion\": 3,",
+      "\"requires\": true,",
+      "\"packages\": {",
+      "\"\": {",
+      "\"name\": \"glassnow\",",
+      "\"version\": \"0.1.0\",",
+      "\"dependencies\": {"
+    ],
+    "package.json": [
+      "{",
+      "\"name\": \"glassnow\",",
+      "\"version\": \"0.1.0\",",
+      "\"private\": true,",
+      "\"scripts\": {",
+      "\"dev\": \"next dev\",",
+      "\"build\": \"next build\",",
+      "\"start\": \"next start\",",
+      "\"lint\": \"eslint .\"",
+      "},"
+    ],
+    "postcss.config.mjs": [
+      "const config = {",
+      "plugins: {",
+      "\"@tailwindcss/postcss\": {},",
+      "},",
+      "};",
+      "",
+      "export default config;",
+      ""
+    ]
+  },
+  "importantFolders": [
+    {
+      "path": "app",
+      "category": "frontend",
+      "fileCount": 9,
+      "primaryLanguage": "JavaScript"
+    },
+    {
+      "path": "app/service-areas",
+      "category": "backend",
+      "fileCount": 1,
+      "primaryLanguage": "JavaScript"
+    },
+    {
+      "path": "components",
+      "category": "frontend",
+      "fileCount": 0
+    },
+    {
+      "path": "potential assets",
+      "category": "assets",
+      "fileCount": 16
+    },
+    {
+      "path": "public",
+      "category": "assets",
+      "fileCount": 21
+    },
+    {
+      "path": "public/images",
+      "category": "assets",
+      "fileCount": 21
+    },
+    {
+      "path": "public/images/services",
+      "category": "backend",
+      "fileCount": 6
+    }
+  ],
+  "readmeParagraphs": {
+    "root": "# GlassNow"
+  },
+  "totals": {
+    "numFiles": 82,
+    "numDirs": 16,
+    "totalSizeBytes": 28297071,
+    "totalLinesOfCode": 1493
+  },
+  "fileCategories": {
+    "other": 70,
+    "documentation": 1,
+    "source": 7,
+    "config": 4
+  },
+  "linesOfCodePerLanguage": {
+    "JavaScript": 1493
+  },
+  "filesPerLanguage": {
+    "JavaScript": 7
+  },
+  "projectTypes": [
+    "JavaScript/Node.js"
+  ],
+  "frameworks": [
+    "React"
+  ],
+  "entryPoints": [],
+  "ciCdTools": [],
+  "packageManagers": [
+    "npm/yarn"
+  ],
+  "topLevelDirectories": [
+    {
+      "name": "app",
+      "numFiles": 9,
+      "totalLoc": 1493,
+      "dominantLanguage": "JavaScript"
+    },
+    {
+      "name": "potential assets",
+      "numFiles": 16,
+      "totalLoc": 0
+    },
+    {
+      "name": "public",
+      "numFiles": 21,
+      "totalLoc": 0
+    },
+    {
+      "name": "resources",
+      "numFiles": 1,
+      "totalLoc": 0
+    }
+  ],
+  "detailedDirectories": [
+    {
+      "path": "app",
+      "name": "app",
+      "level": 1,
+      "numFiles": 9,
+      "totalLoc": 1493,
+      "dominantLanguage": "JavaScript",
+      "category": "Application",
+      "description": "Application module with 9 files (JavaScript)",
+      "subdirectories": [
+        {
+          "path": "app/service-areas",
+          "name": "service-areas",
+          "level": 2,
+          "numFiles": 1,
+          "totalLoc": 142,
+          "dominantLanguage": "JavaScript",
+          "category": "Service",
+          "description": "Service module with 1 files (JavaScript)",
+          "subdirectories": [
+            {
+              "path": "app/service-areas/[area]",
+              "name": "[area]",
+              "level": 3,
+              "numFiles": 1,
+              "totalLoc": 142,
+              "dominantLanguage": "JavaScript",
+              "category": "General",
+              "description": "General module with 1 files (JavaScript)",
+              "subdirectories": []
+            }
+          ]
+        },
+        {
+          "path": "app/[slug]",
+          "name": "[slug]",
+          "level": 2,
+          "numFiles": 1,
+          "totalLoc": 130,
+          "dominantLanguage": "JavaScript",
+          "category": "General",
+          "description": "General module with 1 files (JavaScript)",
+          "subdirectories": []
+        }
+      ]
+    },
+    {
+      "path": "public",
+      "name": "public",
+      "level": 1,
+      "numFiles": 21,
+      "totalLoc": 0,
+      "category": "General",
+      "description": "General module with 21 files",
+      "subdirectories": [
+        {
+          "path": "public/images",
+          "name": "images",
+          "level": 2,
+          "numFiles": 21,
+          "totalLoc": 0,
+          "category": "General",
+          "description": "General module with 21 files",
+          "subdirectories": [
+            {
+              "path": "public/images/brand",
+              "name": "brand",
+              "level": 3,
+              "numFiles": 14,
+              "totalLoc": 0,
+              "category": "General",
+              "description": "General module with 14 files",
+              "subdirectories": []
+            },
+            {
+              "path": "public/images/services",
+              "name": "services",
+              "level": 3,
+              "numFiles": 6,
+              "totalLoc": 0,
+              "category": "Service",
+              "description": "Service module with 6 files",
+              "subdirectories": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "potential assets",
+      "name": "potential assets",
+      "level": 1,
+      "numFiles": 16,
+      "totalLoc": 0,
+      "category": "General",
+      "description": "General module with 16 files",
+      "subdirectories": []
+    },
+    {
+      "path": "resources",
+      "name": "resources",
+      "level": 1,
+      "numFiles": 1,
+      "totalLoc": 0,
+      "category": "General",
+      "description": "General module with 1 files",
+      "subdirectories": []
+    }
+  ],
+  "architecturalInsights": {
+    "coreApplications": [
+      {
+        "path": "app",
+        "name": "app",
+        "level": 1,
+        "numFiles": 9,
+        "totalLoc": 1493,
+        "dominantLanguage": "JavaScript",
+        "category": "Application",
+        "description": "Application module with 9 files (JavaScript)",
+        "subdirectories": [
+          {
+            "path": "app/service-areas",
+            "name": "service-areas",
+            "level": 2,
+            "numFiles": 1,
+            "totalLoc": 142,
+            "dominantLanguage": "JavaScript",
+            "category": "Service",
+            "description": "Service module with 1 files (JavaScript)",
+            "subdirectories": [
+              {
+                "path": "app/service-areas/[area]",
+                "name": "[area]",
+                "level": 3,
+                "numFiles": 1,
+                "totalLoc": 142,
+                "dominantLanguage": "JavaScript",
+                "category": "General",
+                "description": "General module with 1 files (JavaScript)",
+                "subdirectories": []
+              }
+            ]
+          },
+          {
+            "path": "app/[slug]",
+            "name": "[slug]",
+            "level": 2,
+            "numFiles": 1,
+            "totalLoc": 130,
+            "dominantLanguage": "JavaScript",
+            "category": "General",
+            "description": "General module with 1 files (JavaScript)",
+            "subdirectories": []
+          }
+        ]
+      }
+    ],
+    "entryPointDetails": [],
+    "serviceArchitecture": {
+      "microservices": [],
+      "monoliths": [],
+      "libraries": []
+    },
+    "layeredArchitecture": {
+      "presentation": [],
+      "business": [],
+      "data": [],
+      "infrastructure": []
+    }
+  },
+  "largeFiles": [
+    {
+      "path": "public/images/brand/logos/logo-concept-sheet.png",
+      "sizeMb": 2.25
+    },
+    {
+      "path": "potential assets/image.png",
+      "sizeMb": 1.79
+    },
+    {
+      "path": "public/images/brand/mascots/mascot-sheet.png",
+      "sizeMb": 1.51
+    },
+    {
+      "path": "resources/image.png",
+      "sizeMb": 1.28
+    },
+    {
+      "path": "mr-glasscot.png",
+      "sizeMb": 1.25
+    },
+    {
+      "path": "mrglasscot.png",
+      "sizeMb": 1.25
+    },
+    {
+      "path": "public/images/brand/mascots/mrglasscot.png",
+      "sizeMb": 1.25
+    },
+    {
+      "path": "glassnow-logo.png",
+      "sizeMb": 1.05
+    },
+    {
+      "path": "glassnow-logo1.png",
+      "sizeMb": 1.05
+    },
+    {
+      "path": "public/images/brand/logos/glassnow-logo.png",
+      "sizeMb": 1.05
+    },
+    {
+      "path": ".qa/home-desktop-fixed.png",
+      "sizeMb": 1.03
+    },
+    {
+      "path": ".qa/home-desktop.png",
+      "sizeMb": 1.03
+    }
+  ],
+  "dependencies": {
+    "production": [
+      "@tailwindcss/postcss",
+      "lucide-react",
+      "next",
+      "react",
+      "react-dom",
+      "tailwindcss"
+    ],
+    "development": [
+      "@eslint/eslintrc",
+      "eslint",
+      "eslint-config-next",
+      "playwright"
+    ],
+    "total": 10
+  },
+  "complexity": {
+    "averageFileSize": 18.20731707317073,
+    "maxFileSize": 23592.96,
+    "nestedDepth": 0,
+    "estimatedComplexity": "low"
+  }
+}
