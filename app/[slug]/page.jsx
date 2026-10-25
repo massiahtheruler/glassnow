@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { baseUrl, servicePages, serviceSlugs } from "../site-content";
+import { baseUrl, contact, servicePages, serviceSlugs } from "../site-content";
 
 export function generateStaticParams() {
   return serviceSlugs.map((slug) => ({ slug }));
@@ -27,6 +27,13 @@ export async function generateMetadata({ params }) {
       description: page.meta,
       url: `${baseUrl}/${slug}`,
       type: "website",
+      images: ["/images/brand/logos/glassnow-logo.png"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${page.title} | GlassNow`,
+      description: page.meta,
+      images: ["/images/brand/logos/glassnow-logo.png"],
     },
   };
 }
@@ -47,8 +54,29 @@ export default async function ServicePage({ params }) {
       "@type": "Organization",
       name: "GlassNow",
     },
+    url: `${baseUrl}/${slug}`,
+    serviceType: page.title,
     areaServed: ["New Jersey", "NYC metro area"],
     description: page.meta,
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: baseUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: page.title,
+        item: `${baseUrl}/${slug}`,
+      },
+    ],
   };
 
   return (
@@ -56,6 +84,10 @@ export default async function ServicePage({ params }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <header className="detail-header">
         <Link className="detail-brand" href="/" aria-label="GlassNow home">
@@ -69,7 +101,7 @@ export default async function ServicePage({ params }) {
         </Link>
         <div>
           <Link href="/#quote">Get My Quote</Link>
-          <a href="tel:+12018771720">Call for Service</a>
+          <a href={contact.phoneHref}>Call {contact.phoneDisplay}</a>
         </div>
       </header>
 
@@ -121,7 +153,7 @@ export default async function ServicePage({ params }) {
           We will help coordinate quote information and availability from there.
         </p>
         <Link className="glass-button glass-button--primary" href="/#quote">
-          Start My Quote
+          Request My Quote
         </Link>
       </section>
     </main>

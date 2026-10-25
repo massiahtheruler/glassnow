@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowRight, MapPin } from "lucide-react";
-import { areaPages, areaSlugs, baseUrl } from "../../site-content";
+import { areaPages, areaSlugs, baseUrl, contact } from "../../site-content";
 
 export function generateStaticParams() {
   return areaSlugs.map((area) => ({ area }));
@@ -27,6 +27,13 @@ export async function generateMetadata({ params }) {
       description: page.meta,
       url: `${baseUrl}/service-areas/${area}`,
       type: "website",
+      images: ["/images/brand/logos/glassnow-logo.png"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${page.title} Mobile Auto Glass | GlassNow`,
+      description: page.meta,
+      images: ["/images/brand/logos/glassnow-logo.png"],
     },
   };
 }
@@ -49,6 +56,33 @@ export default async function AreaPage({ params }) {
     },
     areaServed: page.title,
     description: page.meta,
+    url: `${baseUrl}/service-areas/${area}`,
+    serviceType: ["Mobile windshield repair", "Mobile windshield replacement", "Vehicle glass replacement"],
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: baseUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Service Areas",
+        item: `${baseUrl}/service-areas/new-jersey`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: page.title,
+        item: `${baseUrl}/service-areas/${area}`,
+      },
+    ],
   };
 
   return (
@@ -56,6 +90,10 @@ export default async function AreaPage({ params }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <header className="detail-header">
         <Link className="detail-brand" href="/" aria-label="GlassNow home">
@@ -69,7 +107,7 @@ export default async function AreaPage({ params }) {
         </Link>
         <div>
           <Link href="/#quote">Get My Quote</Link>
-          <a href="tel:+12018771720">Call for Service</a>
+          <a href={contact.phoneHref}>Call {contact.phoneDisplay}</a>
         </div>
       </header>
 
@@ -127,7 +165,7 @@ export default async function AreaPage({ params }) {
       </section>
 
       <section className="detail-cta glass-panel">
-        <h2>Need auto glass service near {page.title}?</h2>
+        <h2>Need auto glass service in {page.title}?</h2>
         <p>
           Request service and GlassNow will check coverage, availability, and
           quote details for your vehicle.

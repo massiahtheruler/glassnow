@@ -3,18 +3,43 @@ import "./globals.css";
 export const metadata = {
   metadataBase: new URL("https://glassnow.com"),
   title: {
-    default: "GlassNow | Mobile Auto Glass Repair & Replacement",
+    default: "Mobile Auto Glass Repair & Replacement in New Jersey | GlassNow",
     template: "%s | GlassNow",
   },
   description:
-    "GlassNow provides mobile windshield repair, windshield replacement, and auto-glass service across New Jersey and the greater NYC metro area.",
+    "Request mobile windshield repair, windshield replacement, and vehicle glass service at your location across New Jersey and the greater NYC metro area.",
   alternates: {
     canonical: "/",
   },
+  applicationName: "GlassNow",
+  category: "Auto glass repair",
+  keywords: [
+    "mobile auto glass New Jersey",
+    "windshield replacement New Jersey",
+    "mobile windshield repair",
+    "car window replacement",
+    "fleet auto glass",
+  ],
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
-    title: "GlassNow | Mobile Auto Glass. Today.",
+    title: "Mobile Auto Glass Repair & Replacement in New Jersey | GlassNow",
     description:
-      "Request mobile auto-glass service at your home, workplace, or safe service location across New Jersey and the NYC metro area.",
+      "Request mobile windshield repair and replacement at your home, workplace, or another safe location across New Jersey and the NYC metro area.",
     url: "https://glassnow.com",
     siteName: "GlassNow",
     images: [
@@ -30,7 +55,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "GlassNow | Mobile Auto Glass. Today.",
+    title: "Mobile Auto Glass in New Jersey | GlassNow",
     description:
       "Mobile windshield repair and replacement across New Jersey and the NYC metro area.",
     images: ["/images/brand/logos/glassnow-logo.png"],

@@ -20,12 +20,10 @@ import {
   Wrench,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { areaPages, contact } from "./site-content";
 
-const CONTACT = {
-  phoneDisplay: "(201) 877-1720",
-  phoneHref: "tel:+12018771720",
-  email: "hello@glassnow.com",
-};
+const CONTACT = contact;
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpppqvrr";
 
 const INITIAL_FORM = {
   serviceType: "windshield-replacement",
@@ -46,7 +44,6 @@ const INITIAL_FORM = {
   claimNumber: "",
   notes: "",
   consent: false,
-  photoPlaceholder: "",
 };
 
 const SERVICE_OPTIONS = [
@@ -125,29 +122,16 @@ const STEPS = [
   },
 ];
 
-const AREAS = [
-  "Jersey City",
-  "Newark",
-  "Clifton",
-  "Paterson",
-  "Passaic",
-  "Hoboken",
-  "Elizabeth",
-  "Hackensack",
-  "Fort Lee",
-  "Bergen County",
-  "Hudson County",
-  "Essex County",
-  "Passaic County",
-  "Union County",
-  "nearby NYC metro communities",
-];
+const FEATURED_AREAS = Object.entries(areaPages).map(([slug, area]) => ({
+  slug,
+  name: area.title,
+}));
 
 const FAQS = [
   {
     question: "Can GlassNow come to my location?",
     answer:
-      "Yes. GlassNow focuses on mobile auto-glass service at homes, workplaces, driveways, parking lots, fleet locations, and other safe service locations.",
+      "Yes. We provide mobile auto glass service at homes, workplaces, driveways, parking lots, fleet locations, and other safe service locations.",
   },
   {
     question: "How quickly can my glass be replaced?",
@@ -162,7 +146,7 @@ const FAQS = [
   {
     question: "Do you work with insurance?",
     answer:
-      "GlassNow can help make insurance information and documentation clearer, but we do not claim to represent your insurer.",
+      "Yes. We can help you organize the claim information and documents needed for your request. Coverage and payment decisions remain with your insurer.",
   },
   {
     question: "Will my vehicle need ADAS calibration?",
@@ -191,6 +175,7 @@ function GlassButton({
   variant = "primary",
   className = "",
   onClick,
+  disabled = false,
 }) {
   const classes = `glass-button glass-button--${variant} ${className}`;
 
@@ -203,7 +188,7 @@ function GlassButton({
   }
 
   return (
-    <button className={classes} type={type} onClick={onClick}>
+    <button className={classes} type={type} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );
@@ -249,7 +234,15 @@ function Header() {
   );
 }
 
-function QuoteForm({ form, setForm, selectedLabel, onSubmit, submitted }) {
+function QuoteForm({
+  form,
+  setForm,
+  selectedLabel,
+  onSubmit,
+  photos,
+  setPhotos,
+  submissionStatus,
+}) {
   const updateField = (field, value) => {
     setForm((current) => ({ ...current, [field]: value }));
   };
@@ -258,7 +251,7 @@ function QuoteForm({ form, setForm, selectedLabel, onSubmit, submitted }) {
     <GlassPanel className="estimate-card quote-card" id="quote">
       <div className="estimate-heading">
         <p>Quote request</p>
-        <h2>Get auto glass help in minutes.</h2>
+        <h2>Request your auto glass quote.</h2>
       </div>
 
       <form className="estimate-form" onSubmit={onSubmit}>
@@ -314,6 +307,7 @@ function QuoteForm({ form, setForm, selectedLabel, onSubmit, submitted }) {
             value={form.email}
             onChange={(event) => updateField("email", event.target.value)}
             placeholder="name@email.com"
+            required
           />
         </label>
 
@@ -375,7 +369,7 @@ function QuoteForm({ form, setForm, selectedLabel, onSubmit, submitted }) {
           <input
             value={form.glassLocation}
             onChange={(event) => updateField("glassLocation", event.target.value)}
-            placeholder="Windshield, driver door, rear glass..."
+            placeholder="Windshield, driver-side window, rear glass…"
           />
         </label>
 
@@ -445,20 +439,24 @@ function QuoteForm({ form, setForm, selectedLabel, onSubmit, submitted }) {
           />
         </label>
 
-        <button
-          className="upload-placeholder span-2"
-          type="button"
-          onClick={() => updateField("photoPlaceholder", "Photos can be attached in the live intake step.")}
-        >
+        <label className="upload-placeholder span-2">
           <Upload size={18} aria-hidden="true" />
           <span>
-            Upload photos
+            Add damage photos
             <small>
-              {form.photoPlaceholder ||
-                "Photo upload placeholder ready for storage or form backend integration."}
+              {photos.length
+                ? `${photos.length} photo${photos.length === 1 ? "" : "s"} selected`
+                : "Choose up to three photos to help us confirm the glass you need."}
             </small>
           </span>
-        </button>
+          <input
+            className="visually-hidden-file"
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(event) => setPhotos(Array.from(event.target.files || []).slice(0, 3))}
+          />
+        </label>
 
         <label className="consent-field span-2">
           <input
@@ -475,18 +473,36 @@ function QuoteForm({ form, setForm, selectedLabel, onSubmit, submitted }) {
 
         <SoftQuoteSummary selectedLabel={selectedLabel} urgency={form.urgency} />
 
-        <GlassButton className="span-2 submit-button" type="submit">
-          Get My Quote <ArrowRight size={18} aria-hidden="true" />
+        <GlassButton
+          className="span-2 submit-button"
+          type="submit"
+          disabled={submissionStatus === "sending"}
+        >
+          {submissionStatus === "sending" ? "Sending Request…" : "Get My Quote"}
+          {submissionStatus !== "sending" ? <ArrowRight size={18} aria-hidden="true" /> : null}
         </GlassButton>
 
-        {submitted ? (
+        {submissionStatus === "success" ? (
           <div className="success-message success-card" role="status">
             <CheckCircle2 size={20} aria-hidden="true" />
             <span>
-              Your request is in. A GlassNow service coordinator will review the
-              details and contact you about pricing and availability.
+              Your request was sent to GlassNow. We will follow up about pricing
+              and availability using your preferred contact method.
             </span>
             <a href={CONTACT.phoneHref}>Need urgent help? Call {CONTACT.phoneDisplay}</a>
+          </div>
+        ) : null}
+
+        {submissionStatus === "error" ? (
+          <div className="error-message success-card" role="alert">
+            <span>
+              We could not send your request right now. Please try again, call us,
+              or email the details directly.
+            </span>
+            <div>
+              <a href={CONTACT.phoneHref}>Call {CONTACT.phoneDisplay}</a>
+              <a href={CONTACT.emailHref}>Email {CONTACT.email}</a>
+            </div>
           </div>
         ) : null}
       </form>
@@ -559,7 +575,7 @@ function HeroMedia() {
       </div>
       <GlassPanel className="hero-proof-card">
         <strong>Mobile Auto Glass. Today.</strong>
-        <span>One request. One team. One clear solution.</span>
+        <span>One request. Clear next steps. Service at your location.</span>
       </GlassPanel>
     </div>
   );
@@ -640,10 +656,18 @@ function BusinessJsonLd() {
     url: "https://glassnow.com",
     logo: "https://glassnow.com/images/brand/logos/glassnow-logo.png",
     areaServed: ["New Jersey", "NYC metro area"],
-    telephone: CONTACT.phoneDisplay,
+    telephone: CONTACT.phoneE164,
     email: CONTACT.email,
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: CONTACT.phoneE164,
+      email: CONTACT.email,
+      contactType: "customer service",
+      areaServed: "US-NJ",
+      availableLanguage: "English",
+    },
     description:
-      "GlassNow provides mobile auto glass repair and replacement service across New Jersey and the greater NYC metro area.",
+      "Mobile windshield repair, windshield replacement, and vehicle glass service across New Jersey and the greater NYC metro area.",
     serviceType: [
       "Windshield replacement",
       "Windshield chip repair",
@@ -664,7 +688,8 @@ function BusinessJsonLd() {
 
 export default function HomePage() {
   const [form, setForm] = useState(INITIAL_FORM);
-  const [submitted, setSubmitted] = useState(false);
+  const [photos, setPhotos] = useState([]);
+  const [submissionStatus, setSubmissionStatus] = useState("idle");
 
   const selectedLabel = useMemo(() => {
     const allServices = [...SERVICE_OPTIONS, ...OTHER_SERVICE_OPTIONS];
@@ -675,9 +700,46 @@ export default function HomePage() {
     setForm((current) => ({ ...current, serviceType }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setSubmitted(true);
+    setSubmissionStatus("sending");
+
+    const request = new FormData();
+    request.append("_subject", `GlassNow quote request: ${selectedLabel}`);
+    request.append("Service", selectedLabel);
+    request.append("Name", form.fullName);
+    request.append("Phone", form.phone);
+    request.append("Email", form.email || "Not provided");
+    request.append("Preferred contact", form.contactMethod);
+    request.append("Service address", `${form.street}, ${form.city}, ${form.state} ${form.zipCode}`);
+    request.append("Vehicle", form.vehicle);
+    request.append("Glass location", form.glassLocation || "Not specified");
+    request.append("Vehicle location type", form.locationType);
+    request.append("Urgency", form.urgency);
+    request.append("Payment", form.paymentType);
+    request.append("Insurance company", form.insuranceCompany || "Not provided");
+    request.append("Claim number", form.claimNumber || "Not provided");
+    request.append("Damage details", form.notes);
+    request.append("Consent", form.consent ? "Yes" : "No");
+    photos.forEach((photo) => request.append("Damage photos", photo));
+
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        body: request,
+        headers: { Accept: "application/json" },
+      });
+
+      if (!response.ok) {
+        throw new Error("Form submission failed");
+      }
+
+      setSubmissionStatus("success");
+      setForm(INITIAL_FORM);
+      setPhotos([]);
+    } catch {
+      setSubmissionStatus("error");
+    }
   };
 
   return (
@@ -688,12 +750,12 @@ export default function HomePage() {
 
       <section className="hero-section">
         <div className="hero-copy">
-          <p className="hero-eyebrow">Mobile Auto Glass Across New Jersey & the NYC Metro</p>
+          <p className="hero-eyebrow">Mobile Auto Glass Across New Jersey &amp; the NYC Metro</p>
           <h1>Broken Glass Shouldn't Break Your Day.</h1>
           <p>
-            GlassNow provides mobile windshield repair, replacement, and
-            auto-glass service at your home, workplace, or safe service
-            location. Request a quote and we'll coordinate the rest.
+            Get mobile windshield repair, replacement, and vehicle glass service
+            at your home, workplace, or another safe location. Tell us what you
+            drive and what happened—we'll help with the rest.
           </p>
 
           <div className="hero-actions">
@@ -728,18 +790,17 @@ export default function HomePage() {
         <span>Mobile service at your location</span>
         <span>New Jersey and NYC metro coverage</span>
         <span>Fast quote process</span>
-        <span>Professional installation</span>
-        <span>Experienced auto-glass professionals</span>
+        <span>Service at a safe location</span>
+        <span>Clear scheduling and follow-up</span>
       </section>
 
       <section className="estimate-section" aria-label="Quote request form">
         <div className="estimate-intro">
-          <p>One Request. We Handle the Rest.</p>
-          <h2>No calling around. No guessing who has the glass.</h2>
+          <p>One request. Clear next steps.</p>
+          <h2>Skip the runaround and start with one complete request.</h2>
           <span>
-            GlassNow coordinates glass sourcing, scheduling, service
-            communication, and completion under one consistent customer
-            experience.
+            Send your vehicle, damage, and location details once. We'll review
+            the glass you need, check availability, and follow up with the next step.
           </span>
         </div>
         <QuoteForm
@@ -747,7 +808,9 @@ export default function HomePage() {
           setForm={setForm}
           selectedLabel={selectedLabel}
           onSubmit={handleSubmit}
-          submitted={submitted}
+          photos={photos}
+          setPhotos={setPhotos}
+          submissionStatus={submissionStatus}
         />
       </section>
 
@@ -766,7 +829,7 @@ export default function HomePage() {
       <section className="steps-section" id="how-it-works">
         <div className="section-heading">
           <p>How it works</p>
-          <h2>Simple from the first request to the finished glass.</h2>
+          <h2>A straightforward path from damage to replacement.</h2>
         </div>
         <div className="steps-grid">
           {STEPS.map((step) => (
@@ -779,7 +842,7 @@ export default function HomePage() {
         <GlassPanel className="materials-panel">
           <div className="materials-copy">
             <p>Mobile service</p>
-            <h2>We come to the place that makes the job practical.</h2>
+            <h2>Mobile service that works around your day.</h2>
             <span>
               Home, work, driveway, parking lot, fleet lot, or another safe
               service location. GlassNow helps coordinate the service around
@@ -814,8 +877,8 @@ export default function HomePage() {
             <h2>Using insurance? We'll help make the process clearer.</h2>
             <span>
               Share your insurer, claim number if you have one, and the damage
-              details. GlassNow can help organize the information needed for
-              your auto-glass request without claiming to represent your insurer.
+              details. We can help organize the information needed for your
+              request; coverage and payment decisions remain with your insurer.
             </span>
           </div>
           <div className="insurance-actions">
@@ -838,10 +901,10 @@ export default function HomePage() {
           <h2>Coverage across New Jersey and the greater NYC metro area.</h2>
         </div>
         <div className="area-grid">
-          {AREAS.map((area) => (
-            <a key={area} href="#quote">
+          {FEATURED_AREAS.map((area) => (
+            <a key={area.slug} href={`/service-areas/${area.slug}`}>
               <MapPin size={16} aria-hidden="true" />
-              {area}
+              {area.name}
             </a>
           ))}
         </div>
@@ -853,7 +916,7 @@ export default function HomePage() {
       <section className="faq-section">
         <div className="section-heading">
           <p>FAQ</p>
-          <h2>Clear answers before you book.</h2>
+          <h2>Clear answers before you request service.</h2>
         </div>
         <div className="faq-grid">
           {FAQS.map((faq) => (
@@ -868,7 +931,7 @@ export default function HomePage() {
       <section className="retention-section final-cta">
         <GlassPanel className="retention-panel">
           <div>
-            <p>Get Clear. Get Moving.</p>
+            <p>Get a clear next step.</p>
             <h2>Tell us what happened, where you are, and what you drive.</h2>
             <span>
               GlassNow will help coordinate the next step, from quote review to
@@ -910,7 +973,7 @@ export default function HomePage() {
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
           <a href="/windshield-replacement">Windshield replacement</a>
           <a href="/service-areas/new-jersey">New Jersey service areas</a>
-          <span>Business address and hours pending verification</span>
+          <span>Mobile service across New Jersey and nearby NYC metro communities</span>
         </div>
       </footer>
     </main>
