@@ -239,32 +239,10 @@ function QuoteForm({
   setForm,
   selectedLabel,
   onSubmit,
-  photos,
-  setPhotos,
   formspreeState,
 }) {
   const updateField = (field, value) => {
     setForm((current) => ({ ...current, [field]: value }));
-  };
-
-  const updatePhotos = (event) => {
-    const selectedPhotos = Array.from(event.target.files || []);
-    const oversizedPhoto = selectedPhotos.some((photo) => photo.size > 25 * 1024 * 1024);
-
-    if (selectedPhotos.length > 3 || oversizedPhoto) {
-      event.target.value = "";
-      event.target.setCustomValidity(
-        selectedPhotos.length > 3
-          ? "Please choose no more than three photos."
-          : "Each photo must be 25 MB or smaller.",
-      );
-      event.target.reportValidity();
-      setPhotos([]);
-      return;
-    }
-
-    event.target.setCustomValidity("");
-    setPhotos(selectedPhotos);
   };
 
   return (
@@ -478,25 +456,15 @@ function QuoteForm({
           />
         </label>
 
-        <label className="upload-placeholder span-2">
+        <div className="upload-placeholder upload-note span-2">
           <Upload size={18} aria-hidden="true" />
           <span>
-            Add damage photos
+            Have damage photos ready
             <small>
-              {photos.length
-                ? `${photos.length} photo${photos.length === 1 ? "" : "s"} selected`
-                : "Choose up to three photos to help us confirm the glass you need."}
+              GlassNow will ask for photos when we follow up on your request.
             </small>
           </span>
-          <input
-            className="visually-hidden-file"
-            type="file"
-            name="Damage photos"
-            accept="image/*"
-            multiple
-            onChange={updatePhotos}
-          />
-        </label>
+        </div>
 
         <label className="consent-field span-2">
           <input
@@ -731,7 +699,6 @@ function BusinessJsonLd() {
 
 export default function HomePage() {
   const [form, setForm] = useState(INITIAL_FORM);
-  const [photos, setPhotos] = useState([]);
   const [formspreeState, handleFormspreeSubmit] = useForm("xpppqvrr");
 
   const selectedLabel = useMemo(() => {
@@ -809,8 +776,6 @@ export default function HomePage() {
           setForm={setForm}
           selectedLabel={selectedLabel}
           onSubmit={handleFormspreeSubmit}
-          photos={photos}
-          setPhotos={setPhotos}
           formspreeState={formspreeState}
         />
       </section>
