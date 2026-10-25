@@ -19,11 +19,11 @@ import {
   Upload,
   Wrench,
 } from "lucide-react";
+import { useForm, ValidationError } from "@formspree/react";
 import { useMemo, useState } from "react";
 import { areaPages, contact } from "./site-content";
 
 const CONTACT = contact;
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpppqvrr";
 
 const INITIAL_FORM = {
   serviceType: "windshield-replacement",
@@ -241,10 +241,30 @@ function QuoteForm({
   onSubmit,
   photos,
   setPhotos,
-  submissionStatus,
+  formspreeState,
 }) {
   const updateField = (field, value) => {
     setForm((current) => ({ ...current, [field]: value }));
+  };
+
+  const updatePhotos = (event) => {
+    const selectedPhotos = Array.from(event.target.files || []);
+    const oversizedPhoto = selectedPhotos.some((photo) => photo.size > 25 * 1024 * 1024);
+
+    if (selectedPhotos.length > 3 || oversizedPhoto) {
+      event.target.value = "";
+      event.target.setCustomValidity(
+        selectedPhotos.length > 3
+          ? "Please choose no more than three photos."
+          : "Each photo must be 25 MB or smaller.",
+      );
+      event.target.reportValidity();
+      setPhotos([]);
+      return;
+    }
+
+    event.target.setCustomValidity("");
+    setPhotos(selectedPhotos);
   };
 
   return (
@@ -255,9 +275,12 @@ function QuoteForm({
       </div>
 
       <form className="estimate-form" onSubmit={onSubmit}>
+        <input type="hidden" name="_subject" value={`GlassNow quote request: ${selectedLabel}`} />
+        <input type="hidden" name="Service label" value={selectedLabel} />
         <label className="span-2">
           <span>Service needed</span>
           <select
+            name="Service"
             value={form.serviceType}
             onChange={(event) => updateField("serviceType", event.target.value)}
             aria-label="Service needed"
@@ -282,6 +305,7 @@ function QuoteForm({
         <label>
           <span>Full name</span>
           <input
+            name="Name"
             value={form.fullName}
             onChange={(event) => updateField("fullName", event.target.value)}
             placeholder="Your name"
@@ -292,6 +316,7 @@ function QuoteForm({
         <label>
           <span>Phone</span>
           <input
+            name="Phone"
             inputMode="tel"
             value={form.phone}
             onChange={(event) => updateField("phone", event.target.value)}
@@ -304,16 +329,19 @@ function QuoteForm({
           <span>Email</span>
           <input
             type="email"
+            name="email"
             value={form.email}
             onChange={(event) => updateField("email", event.target.value)}
             placeholder="name@email.com"
             required
           />
+          <ValidationError prefix="Email" field="email" errors={formspreeState.errors} />
         </label>
 
         <label>
           <span>Preferred contact</span>
           <select
+            name="Preferred contact"
             value={form.contactMethod}
             onChange={(event) => updateField("contactMethod", event.target.value)}
           >
@@ -326,6 +354,7 @@ function QuoteForm({
         <label className="span-2">
           <span>Service address</span>
           <input
+            name="Service address"
             value={form.street}
             onChange={(event) => updateField("street", event.target.value)}
             placeholder="Street address where the vehicle will be"
@@ -336,6 +365,7 @@ function QuoteForm({
         <label>
           <span>City</span>
           <input
+            name="City"
             value={form.city}
             onChange={(event) => updateField("city", event.target.value)}
             placeholder="Jersey City"
@@ -346,6 +376,7 @@ function QuoteForm({
         <label>
           <span>ZIP code</span>
           <input
+            name="ZIP code"
             inputMode="numeric"
             value={form.zipCode}
             onChange={(event) => updateField("zipCode", event.target.value)}
@@ -357,6 +388,7 @@ function QuoteForm({
         <label className="span-2">
           <span>Vehicle information</span>
           <input
+            name="Vehicle"
             value={form.vehicle}
             onChange={(event) => updateField("vehicle", event.target.value)}
             placeholder="Year, make, model, body style, VIN if you have it"
@@ -367,6 +399,7 @@ function QuoteForm({
         <label>
           <span>Glass location</span>
           <input
+            name="Glass location"
             value={form.glassLocation}
             onChange={(event) => updateField("glassLocation", event.target.value)}
             placeholder="Windshield, driver-side window, rear glass…"
@@ -376,6 +409,7 @@ function QuoteForm({
         <label>
           <span>Vehicle location type</span>
           <select
+            name="Vehicle location type"
             value={form.locationType}
             onChange={(event) => updateField("locationType", event.target.value)}
           >
@@ -390,6 +424,7 @@ function QuoteForm({
         <label>
           <span>Urgency</span>
           <select
+            name="Urgency"
             value={form.urgency}
             onChange={(event) => updateField("urgency", event.target.value)}
           >
@@ -402,6 +437,7 @@ function QuoteForm({
         <label>
           <span>Insurance or self-pay</span>
           <select
+            name="Payment"
             value={form.paymentType}
             onChange={(event) => updateField("paymentType", event.target.value)}
           >
@@ -414,6 +450,7 @@ function QuoteForm({
         <label>
           <span>Insurance company</span>
           <input
+            name="Insurance company"
             value={form.insuranceCompany}
             onChange={(event) => updateField("insuranceCompany", event.target.value)}
             placeholder="Optional"
@@ -423,6 +460,7 @@ function QuoteForm({
         <label>
           <span>Claim number</span>
           <input
+            name="Claim number"
             value={form.claimNumber}
             onChange={(event) => updateField("claimNumber", event.target.value)}
             placeholder="Optional"
@@ -432,6 +470,7 @@ function QuoteForm({
         <label className="span-2">
           <span>Describe the damage</span>
           <textarea
+            name="Damage details"
             value={form.notes}
             onChange={(event) => updateField("notes", event.target.value)}
             placeholder="Tell us what happened, where the damage is, and any timing details."
@@ -452,15 +491,18 @@ function QuoteForm({
           <input
             className="visually-hidden-file"
             type="file"
+            name="Damage photos"
             accept="image/*"
             multiple
-            onChange={(event) => setPhotos(Array.from(event.target.files || []).slice(0, 3))}
+            onChange={updatePhotos}
           />
         </label>
 
         <label className="consent-field span-2">
           <input
             type="checkbox"
+            name="Consent"
+            value="Yes"
             checked={form.consent}
             onChange={(event) => updateField("consent", event.target.checked)}
             required
@@ -476,13 +518,13 @@ function QuoteForm({
         <GlassButton
           className="span-2 submit-button"
           type="submit"
-          disabled={submissionStatus === "sending"}
+          disabled={formspreeState.submitting}
         >
-          {submissionStatus === "sending" ? "Sending Request…" : "Get My Quote"}
-          {submissionStatus !== "sending" ? <ArrowRight size={18} aria-hidden="true" /> : null}
+          {formspreeState.submitting ? "Sending Request…" : "Get My Quote"}
+          {!formspreeState.submitting ? <ArrowRight size={18} aria-hidden="true" /> : null}
         </GlassButton>
 
-        {submissionStatus === "success" ? (
+        {formspreeState.succeeded ? (
           <div className="success-message success-card" role="status">
             <CheckCircle2 size={20} aria-hidden="true" />
             <span>
@@ -493,7 +535,7 @@ function QuoteForm({
           </div>
         ) : null}
 
-        {submissionStatus === "error" ? (
+        {formspreeState.errors ? (
           <div className="error-message success-card" role="alert">
             <span>
               We could not send your request right now. Please try again, call us,
@@ -503,6 +545,7 @@ function QuoteForm({
               <a href={CONTACT.phoneHref}>Call {CONTACT.phoneDisplay}</a>
               <a href={CONTACT.emailHref}>Email {CONTACT.email}</a>
             </div>
+            <ValidationError errors={formspreeState.errors} />
           </div>
         ) : null}
       </form>
@@ -689,7 +732,7 @@ function BusinessJsonLd() {
 export default function HomePage() {
   const [form, setForm] = useState(INITIAL_FORM);
   const [photos, setPhotos] = useState([]);
-  const [submissionStatus, setSubmissionStatus] = useState("idle");
+  const [formspreeState, handleFormspreeSubmit] = useForm("xpppqvrr");
 
   const selectedLabel = useMemo(() => {
     const allServices = [...SERVICE_OPTIONS, ...OTHER_SERVICE_OPTIONS];
@@ -698,48 +741,6 @@ export default function HomePage() {
 
   const selectService = (serviceType) => {
     setForm((current) => ({ ...current, serviceType }));
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setSubmissionStatus("sending");
-
-    const request = new FormData();
-    request.append("_subject", `GlassNow quote request: ${selectedLabel}`);
-    request.append("Service", selectedLabel);
-    request.append("Name", form.fullName);
-    request.append("Phone", form.phone);
-    request.append("Email", form.email || "Not provided");
-    request.append("Preferred contact", form.contactMethod);
-    request.append("Service address", `${form.street}, ${form.city}, ${form.state} ${form.zipCode}`);
-    request.append("Vehicle", form.vehicle);
-    request.append("Glass location", form.glassLocation || "Not specified");
-    request.append("Vehicle location type", form.locationType);
-    request.append("Urgency", form.urgency);
-    request.append("Payment", form.paymentType);
-    request.append("Insurance company", form.insuranceCompany || "Not provided");
-    request.append("Claim number", form.claimNumber || "Not provided");
-    request.append("Damage details", form.notes);
-    request.append("Consent", form.consent ? "Yes" : "No");
-    photos.forEach((photo) => request.append("Damage photos", photo));
-
-    try {
-      const response = await fetch(FORMSPREE_ENDPOINT, {
-        method: "POST",
-        body: request,
-        headers: { Accept: "application/json" },
-      });
-
-      if (!response.ok) {
-        throw new Error("Form submission failed");
-      }
-
-      setSubmissionStatus("success");
-      setForm(INITIAL_FORM);
-      setPhotos([]);
-    } catch {
-      setSubmissionStatus("error");
-    }
   };
 
   return (
@@ -807,10 +808,10 @@ export default function HomePage() {
           form={form}
           setForm={setForm}
           selectedLabel={selectedLabel}
-          onSubmit={handleSubmit}
+          onSubmit={handleFormspreeSubmit}
           photos={photos}
           setPhotos={setPhotos}
-          submissionStatus={submissionStatus}
+          formspreeState={formspreeState}
         />
       </section>
 
